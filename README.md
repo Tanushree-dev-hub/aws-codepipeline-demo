@@ -1,8 +1,13 @@
 ⚙️ CodePipeline with Terraform & DevSecOps using GitHub Actions and Kubernetes Sealed Secrets
+
 This project establishes a robust CI/CD pipeline on AWS using Terraform, enhanced with cutting-edge DevSecOps practices via GitHub Actions. It provisions an end-to-end AWS CodePipeline (Source, Build, Deploy to EC2) and validates infrastructure with Terratest. Further, it integrates GitHub Actions for automated DevSecOps, incorporating security scanning (tfsec for Terraform, Trivy for Docker images) and secure secret management with Kubernetes Sealed Secrets. This ensures a secure, automated, and efficient application delivery workflow, triggered on every code push.# aws-codepipeline-demo
 
 
+ 
+
+
 ✨ Features
+
 ⚙️ End-to-end AWS CodePipeline: Fully provisioned with Terraform (Source, Build, Deploy).
 🚀 CI/CD Automation: Leverages GitHub Actions for seamless workflow orchestration.
 🔒 DevSecOps Integration: Incorporates tfsec for Terraform security and Trivy for Docker image vulnerability scanning.
@@ -10,6 +15,8 @@ This project establishes a robust CI/CD pipeline on AWS using Terraform, enhance
 🧪 Infrastructure Testing: Validates Terraform modules and deployed infrastructure using Terratest.
 ☁️ Flexible Deployment: Supports deployment to AWS EC2 instances and Kubernetes clusters.
 🔐 IAM & S3: Configures necessary IAM roles and S3 buckets for artifact storage.
+
+
 
 💻 Tech Stack
 Category	Tools / Platforms
@@ -45,7 +52,20 @@ Usage / How it Works
 This project is divided into two main tasks: provisioning an AWS CodePipeline with Terraform and enhancing it with DevSecOps practices using GitHub Actions and Kubernetes Sealed Secrets.
 
 Task 1: AWS CodePipeline using Terraform
+
 This task focuses on provisioning a CI/CD pipeline using AWS CodePipeline, CodeBuild, and CodeDeploy with Terraform. It sets up an automated deployment from GitHub to an EC2 instance, with infrastructure validation using Terratest.
+
+Technologies Used
+ 
+| Tool                                 | Purpose                                                   |
+| ------------------------------------ | --------------------------------------------------------- |
+| **Terraform**                        | Infrastructure as Code (IaC) to provision AWS resources   |
+| **AWS CodePipeline**                 | Automates source → build → deploy pipeline                |
+| **AWS CodeBuild**                    | Builds and tests source code                              |
+| **AWS CodeDeploy / EC2 / ECS / EKS** | Deploys the application                                   |
+| **GitHub Actions**                   | CI + DevSecOps tasks like linting, vulnerability scanning |
+| **Kubernetes Sealed Secrets**        | Secure and encrypted secret management for K8s            |
+| **IAM Roles/Policies**               | Access control for AWS services                           |
 
 📌 Task Objectives
 Use Terraform to provision AWS CodePipeline with Source (GitHub), Build (AWS CodeBuild), and Deploy (AWS CodeDeploy to EC2) stages.
@@ -60,6 +80,40 @@ Your application repository must contain:
 ✅ scripts/install.sh: Script to install dependencies on the EC2 instance.
 ✅ scripts/start.sh: Script to start your application (e.g., a React app).
 You can copy these example files from the examples/ folder in this repository or refer to a working example application repository.
+
+Infrastructure Components (Terraform)
+1. S3 Bucket
+Stores CodePipeline artifacts.
+
+2. IAM Roles
+Roles for:
+
+CodePipeline
+
+CodeBuild
+
+CodeDeploy
+
+EC2/ECS/EKS access
+
+GitHub OIDC if using federated auth
+
+3. CodePipeline
+Source: GitHub (or CodeCommit)
+
+Build: CodeBuild
+
+Deploy: EC2/CodeDeploy/ECS/EKS
+
+4. CodeBuild
+Docker-based build environment
+
+Executes buildspec.yml
+
+Installs tools, runs tests, builds artifacts
+
+5. CodeDeploy or ECS/EKS
+Deploys application to EC2, ECS (containers), or EKS (Kubernetes)
 
 🧪 Infrastructure Testing with Terratest
 To validate the Terraform modules using Terratest:
